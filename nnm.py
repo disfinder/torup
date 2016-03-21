@@ -11,13 +11,16 @@ from string import strip
 import urllib, urllib2, cookielib
 
 
-def save_torrent(binary_data, filename):
-    f = open(NNM.out_dir + filename + '.torrent', 'wb')
+def save_torrent(binary_data, fname):
+    f = open(NNM.out_dir + fname + '.torrent', 'wb')
     f.write(binary_data)
     f.close()
 
-argparcer=params.create_common_parser()
-params=argparcer.parse_args()
+# argparcer=params.create_common_parser()
+# params=argparcer.parse_args()
+
+params.username='disfinder'
+params.password='f,shdfku'
 
 # try to login
 cookie = cookielib.CookieJar()
@@ -67,8 +70,13 @@ print '-----------------------'
 for torrent_id in ids:
     torrent_id = strip(torrent_id)
     full_file_string = torrent_id
-    if torrent_id.count(NNM.comment_symbol) > 0:
-        torrent_id = strip(torrent_id[:torrent_id.find(NNM.comment_symbol)])
+    # if torrent_id.count(NNM.comment_symbol) > 0:
+    #     torrent_id = strip(torrent_id[:torrent_id.find(NNM.comment_symbol)])
+    if NNM.comment_symbol in torrent_id:
+        torrent_id=torrent_id[:torrent_id.find(NNM.comment_symbol)]
+
+    if (len(torrent_id)==0):
+        continue
     download_url = NNM.tracker_prefix + torrent_id
     web_obj = opener.open(download_url, post_params)
     data = web_obj.read()
@@ -84,8 +92,8 @@ for torrent_id in ids:
     except (IndexError, KeyError):
         # new torrent
         print '[+]', full_file_string
-        save_torrent(data, id)
-    data_file.write(str(id) + ' ' + str(len(data)) + '\n')
+        save_torrent(data, torrent_id)
+    data_file.write(str(torrent_id) + ' ' + str(len(data)) + '\n')
                 
  
 data_file.close()  
