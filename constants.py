@@ -15,6 +15,6 @@ class NNM:
     data_filename='last.lst'
     tracker_prefix='http://nnm-club.me/forum/download.php?id='
     out_dir='./'
-    comment_symbol='#',
+    comment_symbol='#'
     login='%C3%82%C3%B5%C3%AE%C3%A4'
     
