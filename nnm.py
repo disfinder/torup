@@ -42,7 +42,6 @@ print 'Done.'
 
 
 
-    
 try:
     ids_file = open(NNM.id_filename, 'r')
     ids = ids_file.readlines()
